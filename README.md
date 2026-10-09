@@ -1,3 +1,4 @@
+```{=html}
 <!--
 GA3 README template.
 - Add your answers to each question's section below.
@@ -10,6 +11,7 @@ GA3 README template.
   (so make sure you commit them!).
 - Delete instructional comments like this one as you go.
 -->
+```
 
 # GA3 answers - Chandrima Das
 
@@ -47,43 +49,70 @@ GA3 README template.
 
 ### 5: Run `echo.sh` and compare with your predictions
 
-```bash
+```{bash}
 bash scripts/echo.sh Oct07 Oct08
 ```
 
+### **Prediction1:** It will print `Oct07` `Oct07`and `Oct08`, then stop with an error because no third argument was provided, so `$3` is unbound. Because of the settings, `Finished` will not be printed.
+
 The output of the command was:
 
 ```         
+bash scripts/echo.sh Oct07 Oct08 Oct09 Oct10Oct07
+Oct08
+scripts/echo.sh: line 6: $3: unbound variable
 ```
 
-```bash
+``` bash
 bash scripts/echo.sh Oct07 Oct08 Oct09 Oct10
 ```
 
+### **Prediction2:** It will print `Oct07`, `Oct08`, and `Oct09`, followed by `Finished`. `Oct10` becomes `$4`, but in the script we did not use `$4`, so it has no effect.
+
 The output of the command was:
 
 ```         
+Oct07
+Oct08
+Oct09
+Finished
 ```
 
-```bash
+``` bash
 bash scripts/echo.sh Oct07 Oct08 "Oct09 Oct10"
 ```
 
+### **Prediction3:** It will print `Oct07`, `Oct08`, `Oct09 Oct10`, and then `Finished`. The double quotes make `Oct09 Oct10` one argument, so the entire quoted string is assigned to `$3`.
+
 The output of the command was:
 
 ```         
+Oct07
+Oct08
+Oct09 Oct10
+Finished
 ```
 
-```bash
+``` bash
 bash scripts/echo.sh results/fastqc/*.html
 ```
 
+### **Prediction4:** The `*.html` glob will be expanded by the shell into all matching HTML files in `results/fastqc`. These file names will be passed to the script as separate arguments. The script will print the first three matching HTML file paths and then `Finished` Any additional matching files will be ignored because the script only uses `$1`, `$2`, and `$3`.
+
 The output of the command was:
 
 ```         
+results/fastqc/S63_R1_fastqc.html
+results/fastqc/S63_R2_fastqc.html
+results/fastqc/S64_R1_fastqc.html
+Finished
 ```
 
 *Answer*: Which output (if any) differed from your prediction, and why?
+
+### 5. None of the outputs differed from my predictions surprisingly. I am happy.
+
+The first command stopped because `$3` was not provided and `set-euo` treats an unset variable as an error. The second command ignored the fourth argument because the script only uses `$1`, `$2`, and `$3`.
 
 ### 6: Write the `printline.sh` script
 
@@ -93,24 +122,29 @@ The output of the command was:
 
 Test 1:
 
-```bash
+``` bash
 # Your command:
+bash scripts/printline.sh data/metadata.tsv 2
 ```
 
 The output of the command was:
 
 ```         
+S82     10dpi   cathemerium
 ```
 
 Test 2 (with redirection), and checking the contents of the output file:
 
-```bash
+``` bash
 # Your command:
+bash scripts/printline.sh data/metadata.tsv 5 > results/metadata_line5.txt
+cat results/metadata_line5.txt
 ```
 
 The output of the command that checks the file contents was:
 
 ```         
+S83     10dpi   cathemerium
 ```
 
 ------------------------------------------------------------------------
@@ -125,7 +159,7 @@ The output of the command that checks the file contents was:
 
 Code to run `multiqc --help` with the container:
 
-```bash
+``` bash
 # Your command:
 ```
 
@@ -133,7 +167,7 @@ Code to run `multiqc --help` with the container:
 
 The MultiQC command to run MultiQC on `results/fastqc` with output in `results/multiqc`:
 
-```bash
+``` bash
 # Your command:
 ```
 
@@ -145,7 +179,7 @@ The MultiQC command to run MultiQC on `results/fastqc` with output in `results/m
 
 Code to run the script:
 
-```bash
+``` bash
 # Your command:
 ```
 
@@ -161,7 +195,7 @@ Code to run the script:
 
 Code to rerun the script:
 
-```bash
+``` bash
 # Your command:
 ```
 
@@ -183,13 +217,13 @@ Code to rerun the script:
 
 ### 15: Render your README to PDF and HTML
 
-```bash
+``` bash
 pandoc -o README.pdf README.md
 ```
 
-- Command to render to HTML:
+-   Command to render to HTML:
 
-```bash
+``` bash
 # Your command:
 ```
 
@@ -227,7 +261,7 @@ pandoc -o README.pdf README.md
 
 ### 22: Pandoc versions
 
-```bash
+``` bash
 # Your command:
 ```
 
