@@ -153,7 +153,7 @@ S83     10dpi   cathemerium
 
 ### 8: Get a MultiQC container link
 
-*Answer*: The container link (URI) is:
+*Answer*: The container link (URI) is: [oras://community.wave.seqera.io/library/multiqc:1.35--562c547b518ebe20](oras://community.wave.seqera.io/library/multiqc:1.35--562c547b518ebe20)
 
 ### 9: MultiQC's help info, and the MultiQC command
 
@@ -161,6 +161,7 @@ Code to run `multiqc --help` with the container:
 
 ``` bash
 # Your command:
+apptainer exec oras://community.wave.seqera.io/library/multiqc:1.35--562c547b518ebe20 multiqc --help
 ```
 
 <!-- You don't need to paste the MultiQC help output -->
@@ -169,6 +170,8 @@ The MultiQC command to run MultiQC on `results/fastqc` with output in `results/m
 
 ``` bash
 # Your command:
+apptainer exec oras://community.wave.seqera.io/library/multiqc:1.35--562c547b518ebe20 \
+    multiqc --outdir results/multiqc results/fastqc
 ```
 
 ### 10: Write the `multiqc.sh` script
@@ -181,13 +184,18 @@ Code to run the script:
 
 ``` bash
 # Your command:
+bash scripts/multiqc.sh
 ```
 
 <!-- You don't need to paste the MultiQC logging output -->
 
-*Answer*: Number of FastQC reports MultiQC found:
+*Answer*: Number of FastQC reports MultiQC found: 44 reports
 
 *Answer*: Does that match what you expected? Why/why not?
+
+```         
+This matched my expectation because the results/fastqc directory contained 88 FastQC output files, with two files (.html and .zip) for each FastQC analysis.
+```
 
 ### 12: Make `multiqc.sh` accept arguments, and rerun it
 
@@ -197,6 +205,7 @@ Code to rerun the script:
 
 ``` bash
 # Your command:
+bash scripts/multiqc.sh results/fastqc results/multiqc
 ```
 
 <!-- No need to paste any output -->
@@ -204,6 +213,8 @@ Code to rerun the script:
 ### 13: Differences between the two MultiQC runs
 
 *Answer*:
+
+The second MultiQC run was mostly the same as the first one. In both runs, MultiQC found 44 FastQC reports. However, the output file names were different. In the first run, MultiQC created `multiqc_report_1.html` and `multiqc_data_1`, while in the second run it created `multiqc_report_2.html` and `multiqc_data_1_2`.
 
 ------------------------------------------------------------------------
 
@@ -213,7 +224,11 @@ Code to rerun the script:
 
 *Answer* (options and arguments, and what each does):
 
+`pandoc` is the command. The `-o` option specifies the output file, and `README.pdf` is the argument to that option. `README.md` is the input file that Pandoc will render.
+
 *Answer* (how does Pandoc know which output format to produce?):
+
+Pandoc knows to produce PDF output from the `.pdf` extension of the output filename.
 
 ### 15: Render your README to PDF and HTML
 
@@ -225,15 +240,20 @@ pandoc -o README.pdf README.md
 
 ``` bash
 # Your command:
+pandoc -o README.html README.md
 ```
 
 ### 16: Should the rendered files be committed?
 
 *Answer*: Should the rendered files be committed to your Git repo? Why/why not?
 
+I would not commit the rendered `README.pdf` and `README.html` files because they are generated from `README.md` and can be recreated whenever needed using Pandoc.
+
 ### 17: Install the PDF Viewer extension and view the PDF
 
 *Answer*: One observation about the rendered PDF file:
+
+I noticed that one of the long MultiQC commands extended beyond the right margin of the PDF and was partially cut off. I had not noticed this problem in the Markdown editor. Breaking long commands across multiple lines makes the rendered PDF easier to read.
 
 ## Part E: Publish your repo on GitHub
 
